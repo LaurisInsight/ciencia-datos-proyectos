@@ -1,1 +1,646 @@
 
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Lauris Insight · Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    :root {
+      --bg-main: #050816;
+      --bg-card: #0f172a;
+      --bg-card-soft: #111827;
+      --accent-magenta: #ff2d92;
+      --accent-cyan: #22d3ee;
+      --text-main: #e5e7eb;
+      --text-muted: #9ca3af;
+      --border-soft: #1f2937;
+      --shadow-soft: 0 20px 40px rgba(0, 0, 0, 0.45);
+      --radius-xl: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      background: radial-gradient(circle at top, #111827 0, #020617 55%);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 1200px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* Header */
+    .header {
+      background: linear-gradient(135deg, #020617, #0b1120);
+      border-radius: 24px;
+      padding: 20px 24px;
+      border: 1px solid var(--border-soft);
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 14px;
+      background: conic-gradient(
+        from 210deg,
+        var(--accent-magenta),
+        var(--accent-cyan),
+        #6366f1,
+        var(--accent-magenta)
+      );
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: #0b1120;
+      font-size: 18px;
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.7);
+    }
+
+    .brand-text-title {
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+
+    .brand-text-subtitle {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .header-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .tagline {
+      font-size: 13px;
+      color: var(--accent-cyan);
+    }
+
+    .pill {
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      font-size: 11px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .pill-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 8px rgba(34, 197, 94, 0.6);
+    }
+
+    /* Layout main */
+    .main {
+      display: grid;
+      grid-template-columns: minmax(0, 2fr) minmax(0, 1.3fr);
+      gap: 20px;
+    }
+
+    @media (max-width: 900px) {
+      .main {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Panel izquierdo */
+    .panel {
+      background: var(--bg-card-soft);
+      border-radius: 24px;
+      border: 1px solid var(--border-soft);
+      padding: 18px 18px 20px;
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 10px;
+    }
+
+    .panel-title {
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .panel-subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .chip-group {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .chip {
+      font-size: 11px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      color: var(--text-muted);
+    }
+
+    /* KPI cards */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    @media (max-width: 900px) {
+      .kpi-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    .kpi-card {
+      background: linear-gradient(145deg, #020617, #020617 45%, #111827 100%);
+      border-radius: var(--radius-xl);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      padding: 10px 11px;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .kpi-label {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .kpi-value {
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .kpi-tag {
+      font-size: 10px;
+      color: #a5b4fc;
+    }
+
+    .kpi-trend {
+      font-size: 10px;
+      color: #22c55e;
+      margin-top: 4px;
+    }
+
+    .kpi-glow {
+      position: absolute;
+      inset: auto -30%;
+      height: 40px;
+      background: radial-gradient(
+        circle at top,
+        rgba(56, 189, 248, 0.35),
+        transparent
+      );
+      opacity: 0.8;
+      pointer-events: none;
+    }
+
+    /* Fake bar chart */
+    .chart-card {
+      margin-top: 6px;
+      background: radial-gradient(circle at top left, #111827, #020617);
+      border-radius: 20px;
+      border: 1px solid rgba(31, 41, 55, 0.9);
+      padding: 12px 14px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .chart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+    }
+
+    .chart-legend {
+      display: flex;
+      gap: 8px;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .legend-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+    }
+
+    .legend-dot-magenta {
+      background: var(--accent-magenta);
+    }
+
+    .legend-dot-cyan {
+      background: var(--accent-cyan);
+    }
+
+    .chart-body {
+      display: flex;
+      gap: 8px;
+      align-items: flex-end;
+      margin-top: 8px;
+    }
+
+    .chart-bar-group {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .chart-bars {
+      display: flex;
+      gap: 3px;
+      align-items: flex-end;
+      height: 82px;
+    }
+
+    .bar {
+      flex: 1;
+      border-radius: 999px 999px 0 0;
+      background: linear-gradient(
+        to top,
+        rgba(15, 23, 42, 0.7),
+        rgba(15, 23, 42, 0.95)
+      );
+      position: relative;
+      overflow: hidden;
+    }
+
+    .bar-inner-magenta {
+      position: absolute;
+      inset: auto 0 0;
+      border-radius: inherit;
+      background: linear-gradient(to top, #be185d, var(--accent-magenta));
+    }
+
+    .bar-inner-cyan {
+      position: absolute;
+      inset: auto 0 0;
+      border-radius: inherit;
+      background: linear-gradient(to top, #0e7490, var(--accent-cyan));
+    }
+
+    .chart-xlabels {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 4px;
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+
+    .chart-summary {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 6px;
+    }
+
+    /* Panel derecho: proyectos / detalle */
+    .side-panel {
+      background: linear-gradient(145deg, #020617, #020617 45%, #020617);
+      border-radius: 24px;
+      border: 1px solid var(--border-soft);
+      box-shadow: var(--shadow-soft);
+      padding: 18px 18px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .side-header {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .side-title {
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .side-subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .project-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .project-card {
+      border-radius: 18px;
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      background: radial-gradient(circle at top left, #111827, #020617);
+      padding: 10px 11px 11px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .project-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .project-title {
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .project-badge {
+      font-size: 10px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      color: #e5e7eb;
+    }
+
+    .project-desc {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .project-meta {
+      font-size: 10px;
+      color: #a5b4fc;
+      margin-top: 2px;
+    }
+
+    .footer-note {
+      margin-top: 4px;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- HEADER -->
+    <header class="header">
+      <div class="brand">
+        <div class="brand-logo">Li</div>
+        <div>
+          <div class="brand-text-title">Lauris Insight</div>
+          <div class="brand-text-subtitle">
+            Data, Automatización y Tech para decisiones de negocio inteligentes
+          </div>
+        </div>
+      </div>
+      <div class="header-right">
+        <div class="tagline">
+          Data · Automation · BI · Payments
+        </div>
+        <div class="pill">
+          <span class="pill-dot"></span>
+          <span>Dashboard de muestra para porfolio</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- MAIN -->
+    <main class="main">
+      <!-- PANEL IZQUIERDO -->
+      <section class="panel">
+        <div class="panel-header">
+          <div>
+            <div class="panel-title">Visión general</div>
+            <div class="panel-subtitle">
+              Ejemplo de métricas y visualización para proyectos de datos
+            </div>
+          </div>
+          <div class="chip-group">
+            <span class="chip">Últimos 12 meses</span>
+            <span class="chip">Demo Lauris Insight</span>
+          </div>
+        </div>
+
+        <!-- KPI CARDS -->
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-label">Proyectos de Data</div>
+            <div class="kpi-value">12</div>
+            <div class="kpi-tag">Dashboards & análisis</div>
+            <div class="kpi-trend">+3 este año</div>
+            <div class="kpi-glow"></div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-label">Modelos ML</div>
+            <div class="kpi-value">5</div>
+            <div class="kpi-tag">Churn · Riesgo · Segmentación</div>
+            <div class="kpi-trend">+1 en iteración</div>
+            <div class="kpi-glow"></div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-label">Dashboards BI</div>
+            <div class="kpi-value">9</div>
+            <div class="kpi-tag">Power BI · Reportes ejecutivos</div>
+            <div class="kpi-trend">Uso activo por negocio</div>
+            <div class="kpi-glow"></div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-label">Automatizaciones</div>
+            <div class="kpi-value">7</div>
+            <div class="kpi-tag">Power Automate · Low-code</div>
+            <div class="kpi-trend">Reducen tareas manuales</div>
+            <div class="kpi-glow"></div>
+          </div>
+        </div>
+
+        <!-- FAKE BAR CHART -->
+        <div class="chart-card">
+          <div class="chart-header">
+            <div>Proyectos por tipo</div>
+            <div class="chart-legend">
+              <div class="legend-item">
+                <span class="legend-dot legend-dot-magenta"></span>
+                <span>BI / Dashboards</span>
+              </div>
+              <div class="legend-item">
+                <span class="legend-dot legend-dot-cyan"></span>
+                <span>ML / Automatización</span>
+              </div>
+            </div>
+          </div>
+          <div class="chart-body">
+            <div class="chart-bar-group">
+              <div class="chart-bars">
+                <div class="bar">
+                  <div class="bar-inner-magenta" style="height: 78%;"></div>
+                </div>
+                <div class="bar">
+                  <div class="bar-inner-cyan" style="height: 55%;"></div>
+                </div>
+              </div>
+              <div class="chart-xlabels">
+                <span>Pagos</span>
+                <span>Integraciones</span>
+              </div>
+            </div>
+            <div class="chart-bar-group">
+              <div class="chart-bars">
+                <div class="bar">
+                  <div class="bar-inner-magenta" style="height: 60%;"></div>
+                </div>
+                <div class="bar">
+                  <div class="bar-inner-cyan" style="height: 40%;"></div>
+                </div>
+              </div>
+              <div class="chart-xlabels">
+                <span>Onboarding</span>
+                <span>Riesgo</span>
+              </div>
+            </div>
+            <div class="chart-bar-group">
+              <div class="chart-bars">
+                <div class="bar">
+                  <div class="bar-inner-magenta" style="height: 42%;"></div>
+                </div>
+                <div class="bar">
+                  <div class="bar-inner-cyan" style="height: 72%;"></div>
+                </div>
+              </div>
+              <div class="chart-xlabels">
+                <span>Clientes</span>
+                <span>Operación</span>
+              </div>
+            </div>
+          </div>
+          <div class="chart-summary">
+            Este gráfico es solo ilustrativo: podés reemplazarlo luego por un
+            gráfico real (Power BI / JS) cuando conectes tu data.
+          </div>
+        </div>
+      </section>
+
+      <!-- PANEL DERECHO: PROYECTOS -->
+      <aside class="side-panel">
+        <div class="side-header">
+          <div class="side-title">Proyectos destacados</div>
+          <div class="side-subtitle">
+            Ejemplos de cómo se verían tus casos reales en el porfolio
+          </div>
+        </div>
+
+        <div class="project-list">
+          <article class="project-card">
+            <div class="project-title-row">
+              <div class="project-title">
+                Análisis de precios de alojamientos (Airbnb)
+              </div>
+              <span class="project-badge">Data Science</span>
+            </div>
+            <div class="project-desc">
+              Exploración y modelado de factores que influyen en el precio
+              de alojamientos, detección de oportunidades y optimización
+              de pricing.
+            </div>
+            <div class="project-meta">
+              Python · pandas · visualización · mapas geográficos
+            </div>
+          </article>
+
+          <article class="project-card">
+            <div class="project-title-row">
+              <div class="project-title">
+                Modelo de churn para clientes Telco
+              </div>
+              <span class="project-badge">Machine Learning</span>
+            </div>
+            <div class="project-desc">
+              Clasificación para predecir baja de clientes, análisis de
+              métricas (accuracy, precision, recall) y explicación del
+              modelo para negocio.
+            </div>
+            <div class="project-meta">
+              Clasificación · métricas de desempeño · storytelling
+            </div>
+          </article>
+
+          <article class="project-card">
+            <div class="project-title-row">
+              <div class="project-title">
+                CoelsaHub · Panel de integraciones & homologaciones
+              </div>
+              <span class="project-badge">BI & Automatización</span>
+            </div>
+            <div class="project-desc">
+              Dashboard para visibilizar integraciones activas, estado
+              de homologaciones y métricas clave de ecosistema.
+            </div>
+            <div class="project-meta">
+              Power BI · Node.js · ecosistema de pagos
+            </div>
+          </article>
+        </div>
+
+        <div class="footer-note">
+          🔧 Todo el contenido es de ejemplo. Podés cambiar textos y números
+          para que reflejen tus proyectos reales cuando armes el porfolio.
+        </div>
+      </aside>
+    </main>
+  </div>
+</body>
+</html>
