@@ -344,4 +344,537 @@
 
     .bar-inner-magenta {
       position: absolute;
-      inset: au
+      inset: auto 0 0;
+      border-radius: inherit;
+      background: linear-gradient(to top, #be185d, var(--accent-magenta));
+    }
+
+    .bar-inner-cyan {
+      position: absolute;
+      inset: auto 0 0;
+      border-radius: inherit;
+      background: linear-gradient(to top, #0e7490, var(--accent-cyan));
+    }
+
+    .chart-xlabels {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 4px;
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+
+    /* Horizontal bars */
+    .hbar-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-top: 4px;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .hbar-row {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .hbar-label-row {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .hbar-bar-bg {
+      width: 100%;
+      height: 7px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+    }
+
+    .hbar-bar-fill {
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(
+        to right,
+        var(--accent-cyan),
+        var(--accent-magenta)
+      );
+    }
+
+    /* Side panel: proyectos + mini sparkline */
+    .side-panel {
+      background: linear-gradient(145deg, #020617, #020617 45%, #020617);
+      border-radius: 24px;
+      border: 1px solid var(--border-soft);
+      box-shadow: var(--shadow-soft);
+      padding: 18px 18px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .side-header {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .side-title {
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .side-subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .project-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .project-card {
+      border-radius: 18px;
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      background: radial-gradient(circle at top left, #111827, #020617);
+      padding: 10px 11px 11px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .project-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .project-title {
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .project-badge {
+      font-size: 10px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      color: #e5e7eb;
+    }
+
+    .project-desc {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .project-meta {
+      font-size: 10px;
+      color: #a5b4fc;
+      margin-top: 2px;
+    }
+
+    .sparkline {
+      margin-top: 4px;
+      width: 100%;
+      height: 40px;
+      border-radius: 10px;
+      background: linear-gradient(
+        135deg,
+        rgba(34, 211, 238, 0.15),
+        rgba(236, 72, 153, 0.1)
+      );
+      position: relative;
+      overflow: hidden;
+    }
+
+    .sparkline-line {
+      position: absolute;
+      inset: 50% 6px auto 6px;
+      height: 0;
+      border-top: 1.5px solid rgba(148, 163, 184, 0.5);
+    }
+
+    .sparkline-dot {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--accent-cyan);
+      box-shadow: 0 0 10px rgba(34, 211, 238, 0.7);
+    }
+
+    .sparkline-dot:nth-child(2) { left: 10%; top: 60%; }
+    .sparkline-dot:nth-child(3) { left: 32%; top: 48%; }
+    .sparkline-dot:nth-child(4) { left: 54%; top: 55%; }
+    .sparkline-dot:nth-child(5) { left: 76%; top: 40%; }
+    .sparkline-dot:nth-child(6) { left: 90%; top: 42%; }
+
+    .footer-note {
+      margin-top: 4px;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- HEADER -->
+    <header class="header">
+      <div class="brand">
+        <div class="brand-logo">Li</div>
+        <div>
+          <div class="brand-text-title">Lauris Insight</div>
+          <div class="brand-text-subtitle">
+            Data, Automatización y Tech para decisiones de negocio inteligentes
+          </div>
+        </div>
+      </div>
+      <div class="header-right">
+        <div class="tagline">
+          Data · Automation · BI · Payments
+        </div>
+        <div class="pill">
+          <span class="pill-dot"></span>
+          <span>Dashboard Plus · Porfolio Lauris Insight</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- MAIN -->
+    <main class="main">
+      <!-- PANEL IZQUIERDO -->
+      <section class="panel">
+        <div class="panel-header">
+          <div>
+            <div class="panel-title">Visión general</div>
+            <div class="panel-subtitle">
+              Proyectos, modelos y automatizaciones (datos ilustrativos)
+            </div>
+          </div>
+          <div class="chip-group">
+            <span class="chip">Últimos 12 meses</span>
+            <span class="chip">Demo Lauris Insight</span>
+          </div>
+        </div>
+
+        <!-- KPI CARDS -->
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-label">Proyectos de Data</div>
+            <div class="kpi-value">18</div>
+            <div class="kpi-tag">Data · BI · ML</div>
+            <div class="kpi-trend">+6 vs. año anterior</div>
+            <div class="kpi-glow"></div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-label">Dashboards BI</div>
+            <div class="kpi-value">9</div>
+            <div class="kpi-tag">Power BI · Reportes ejecutivos</div>
+            <div class="kpi-trend">Uso activo por negocio</div>
+            <div class="kpi-glow"></div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-label">Modelos ML</div>
+            <div class="kpi-value">5</div>
+            <div class="kpi-tag">Churn · Riesgo · Segmentación</div>
+            <div class="kpi-trend">2 modelos en mejora</div>
+            <div class="kpi-glow"></div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-label">Automatizaciones</div>
+            <div class="kpi-value">7</div>
+            <div class="kpi-tag">Power Automate · Low-code</div>
+            <div class="kpi-trend">–25% tareas manuales</div>
+            <div class="kpi-glow"></div>
+          </div>
+        </div>
+
+        <!-- CHART 1: Proyectos por tipo (barras) -->
+        <div class="chart-card">
+          <div class="chart-header">
+            <div class="chart-title">Proyectos por tipo</div>
+            <div class="chart-legend">
+              <div class="legend-item">
+                <span class="legend-dot legend-dot-magenta"></span>
+                <span>BI / Dashboards</span>
+              </div>
+              <div class="legend-item">
+                <span class="legend-dot legend-dot-cyan"></span>
+                <span>ML / Automatización</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="chart-body">
+            <div class="chart-bar-group">
+              <div class="chart-bars">
+                <div class="bar">
+                  <div class="bar-inner-magenta" style="height: 78%;"></div>
+                </div>
+                <div class="bar">
+                  <div class="bar-inner-cyan" style="height: 55%;"></div>
+                </div>
+              </div>
+              <div class="chart-xlabels">
+                <span>Pagos</span>
+                <span>Integraciones</span>
+              </div>
+            </div>
+            <div class="chart-bar-group">
+              <div class="chart-bars">
+                <div class="bar">
+                  <div class="bar-inner-magenta" style="height: 60%;"></div>
+                </div>
+                <div class="bar">
+                  <div class="bar-inner-cyan" style="height: 40%;"></div>
+                </div>
+              </div>
+              <div class="chart-xlabels">
+                <span>Onboarding</span>
+                <span>Riesgo</span>
+              </div>
+            </div>
+            <div class="chart-bar-group">
+              <div class="chart-bars">
+                <div class="bar">
+                  <div class="bar-inner-magenta" style="height: 42%;"></div>
+                </div>
+                <div class="bar">
+                  <div class="bar-inner-cyan" style="height: 72%;"></div>
+                </div>
+              </div>
+              <div class="chart-xlabels">
+                <span>Clientes</span>
+                <span>Operación</span>
+              </div>
+            </div>
+          </div>
+          <div class="chart-summary">
+            Gráfico ilustrativo: después podés ajustar los valores según tus proyectos reales.
+          </div>
+        </div>
+
+        <!-- CHART 2: Donut simple (distribución mix de proyectos) -->
+        <div class="chart-card">
+          <div class="chart-header">
+            <div class="chart-title">Mix de proyectos por tipo</div>
+            <div class="chart-legend">
+              <div class="legend-item">
+                <span class="legend-dot legend-dot-cyan"></span>
+                <span>BI</span>
+              </div>
+              <div class="legend-item">
+                <span class="legend-dot legend-dot-magenta"></span>
+                <span>ML</span>
+              </div>
+              <div class="legend-item">
+                <span class="legend-dot legend-dot-indigo"></span>
+                <span>Automatización</span>
+              </div>
+              <div class="legend-item">
+                <span class="legend-dot legend-dot-amber"></span>
+                <span>Exploratorio</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="chart-body" style="align-items:center;">
+            <div
+              style="
+                width:120px;
+                height:120px;
+                border-radius:50%;
+                border:10px solid #22d3ee;
+                border-top-color:#ec4899;
+                border-right-color:#6366f1;
+                border-bottom-color:#fbbf24;
+                box-shadow:0 0 25px rgba(34,211,238,0.4);
+                flex-shrink:0;
+              "
+            ></div>
+
+            <div
+              style="
+                flex:1;
+                font-size:11px;
+                color:#9ca3af;
+                display:flex;
+                flex-direction:column;
+                gap:4px;
+                margin-left:12px;
+              "
+            >
+              <div style="display:flex; justify-content:space-between;">
+                <span>BI / Dashboards</span>
+                <span style="color:#e5e7eb; font-weight:500;">40% · 7</span>
+              </div>
+              <div style="display:flex; justify-content:space-between;">
+                <span>ML</span>
+                <span style="color:#e5e7eb; font-weight:500;">25% · 4</span>
+              </div>
+              <div style="display:flex; justify-content:space-between;">
+                <span>Automatización</span>
+                <span style="color:#e5e7eb; font-weight:500;">20% · 4</span>
+              </div>
+              <div style="display:flex; justify-content:space-between;">
+                <span>Exploratorios</span>
+                <span style="color:#e5e7eb; font-weight:500;">15% · 3</span>
+              </div>
+              <div style="margin-top:6px; font-size:10px;">
+                Valores de ejemplo · después podés usar datos reales de tus proyectos.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CHART 3: Esfuerzo estimado (barras horizontales) -->
+        <div class="chart-card">
+          <div class="chart-header">
+            <div class="chart-title">Esfuerzo estimado por tipo de proyecto (horas)</div>
+          </div>
+
+          <div class="hbar-list">
+            <div class="hbar-row">
+              <div class="hbar-label-row">
+                <span>Dashboards ejecutivos</span>
+                <span>120 h</span>
+              </div>
+              <div class="hbar-bar-bg">
+                <div class="hbar-bar-fill" style="width:90%;"></div>
+              </div>
+            </div>
+            <div class="hbar-row">
+              <div class="hbar-label-row">
+                <span>Modelos ML</span>
+                <span>95 h</span>
+              </div>
+              <div class="hbar-bar-bg">
+                <div class="hbar-bar-fill" style="width:70%;"></div>
+              </div>
+            </div>
+            <div class="hbar-row">
+              <div class="hbar-label-row">
+                <span>Automatización de flujos</span>
+                <span>80 h</span>
+              </div>
+              <div class="hbar-bar-bg">
+                <div class="hbar-bar-fill" style="width:60%;"></div>
+              </div>
+            </div>
+            <div class="hbar-row">
+              <div class="hbar-label-row">
+                <span>Análisis exploratorios</span>
+                <span>55 h</span>
+              </div>
+              <div class="hbar-bar-bg">
+                <div class="hbar-bar-fill" style="width:45%;"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="chart-summary">
+            Números ficticios para ilustrar carga de trabajo. Podés reemplazarlos por horas reales.
+          </div>
+        </div>
+      </section>
+
+      <!-- PANEL DERECHO -->
+      <aside class="side-panel">
+        <div class="side-header">
+          <div class="side-title">Proyectos destacados</div>
+          <div class="side-subtitle">
+            Casos que podés incluir en tu porfolio (texto editable)
+          </div>
+        </div>
+
+        <div class="project-list">
+          <article class="project-card">
+            <div class="project-title-row">
+              <div class="project-title">
+                Análisis de precios de alojamientos (Airbnb)
+              </div>
+              <span class="project-badge">Data Science</span>
+            </div>
+            <div class="project-desc">
+              Exploración, variables clave para el precio y detección de
+              oportunidades de inversión. Incluye mapas y análisis de outliers.
+            </div>
+            <div class="project-meta">
+              Python · pandas · visualización · mapas
+            </div>
+            <div class="sparkline">
+              <div class="sparkline-line"></div>
+              <div class="sparkline-dot"></div>
+              <div class="sparkline-dot"></div>
+              <div class="sparkline-dot"></div>
+              <div class="sparkline-dot"></div>
+              <div class="sparkline-dot"></div>
+            </div>
+          </article>
+
+          <article class="project-card">
+            <div class="project-title-row">
+              <div class="project-title">
+                Modelo de churn para clientes Telco
+              </div>
+              <span class="project-badge">Machine Learning</span>
+            </div>
+            <div class="project-desc">
+              Clasificación de clientes según probabilidad de baja, métricas
+              de desempeño y explicación del modelo para negocio.
+            </div>
+            <div class="project-meta">
+              Clasificación · métricas · matriz de confusión
+            </div>
+            <div class="sparkline">
+              <div class="sparkline-line"></div>
+              <div class="sparkline-dot"></div>
+              <div class="sparkline-dot"></div>
+              <div class="sparkline-dot"></div>
+              <div class="sparkline-dot"></div>
+              <div class="sparkline-dot"></div>
+            </div>
+          </article>
+
+          <article class="project-card">
+            <div class="project-title-row">
+              <div class="project-title">
+                CoelsaHub · Panel de integraciones & homologaciones
+              </div>
+              <span class="project-badge">BI & Automatización</span>
+            </div>
+            <div class="project-desc">
+              Dashboard para monitorear integraciones activas, estado de
+              homologaciones y tasas de uso de servicios.
+            </div>
+            <div class="project-meta">
+              Power BI · Node.js · ecosistema de pagos
+            </div>
+            <div class="sparkline">
+              <div class="sparkline-line"></div>
+              <div class="sparkline-dot"></div>
+              <div class="sparkline-dot"></div>
+              <div class="sparkline-dot"></div>
+              <div class="sparkline-dot"></div>
+              <div class="sparkline-dot"></div>
+            </div>
+          </article>
+        </div>
+
+        <div class="footer-note">
+          🔧 Todo es demo visual. Después podés cambiar textos, números y nombres para que reflejen tus proyectos reales.
+        </div>
+      </aside>
+    </main>
+  </div>
+</body>
+</html>
