@@ -242,7 +242,20 @@
       pointer-events: none;
     }
 
-    /* Chart cards genéricos */
+    /* Chart container row (line + donut) */
+    .chart-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1.6fr) minmax(0, 1.2fr);
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    @media (max-width: 800px) {
+      .chart-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
     .chart-card {
       background: radial-gradient(circle at top left, #111827, #020617);
       border-radius: 20px;
@@ -270,8 +283,6 @@
       gap: 8px;
       font-size: 11px;
       color: var(--text-muted);
-      flex-wrap: wrap;
-      justify-content: flex-end;
     }
 
     .legend-item {
@@ -302,87 +313,92 @@
       background: var(--accent-amber);
     }
 
-    .chart-summary {
-      font-size: 11px;
-      color: var(--text-muted);
+    /* Line chart (SVG) */
+    .chart-line-wrapper {
       margin-top: 4px;
     }
 
-    /* Fake bar chart (ya conocido) */
-    .chart-body {
-      display: flex;
-      gap: 8px;
-      align-items: flex-end;
-      margin-top: 8px;
+    .chart-line-svg {
+      width: 100%;
+      height: 160px;
+      display: block;
     }
 
-    .chart-bar-group {
-      flex: 1;
+    .chart-line-caption {
+      margin-top: 4px;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* Donut chart */
+    .donut-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .donut-svg {
+      width: 130px;
+      height: 130px;
+      flex-shrink: 0;
+    }
+
+    .donut-center {
+      font-size: 11px;
+      fill: var(--text-main);
+    }
+
+    .donut-details {
+      font-size: 11px;
+      color: var(--text-muted);
       display: flex;
       flex-direction: column;
+      gap: 4px;
+    }
+
+    .donut-details-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 6px;
+    }
+
+    .donut-label {
+      display: flex;
+      align-items: center;
       gap: 5px;
     }
 
-    .chart-bars {
-      display: flex;
-      gap: 3px;
-      align-items: flex-end;
-      height: 82px;
+    .donut-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
     }
 
-    .bar {
-      flex: 1;
-      border-radius: 999px 999px 0 0;
-      background: linear-gradient(
-        to top,
-        rgba(15, 23, 42, 0.7),
-        rgba(15, 23, 42, 0.95)
-      );
-      position: relative;
-      overflow: hidden;
+    .donut-value {
+      font-weight: 500;
+      color: var(--text-main);
     }
 
-    .bar-inner-magenta {
-      position: absolute;
-      inset: auto 0 0;
-      border-radius: inherit;
-      background: linear-gradient(to top, #be185d, var(--accent-magenta));
-    }
-
-    .bar-inner-cyan {
-      position: absolute;
-      inset: auto 0 0;
-      border-radius: inherit;
-      background: linear-gradient(to top, #0e7490, var(--accent-cyan));
-    }
-
-    .chart-xlabels {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 4px;
-      font-size: 10px;
-      color: var(--text-muted);
-    }
-
-    /* Horizontal bars */
+    /* Horizontal bar chart */
     .hbar-list {
       display: flex;
       flex-direction: column;
       gap: 6px;
       margin-top: 4px;
-      font-size: 11px;
-      color: var(--text-muted);
     }
 
     .hbar-row {
       display: flex;
       flex-direction: column;
       gap: 3px;
+      font-size: 11px;
     }
 
     .hbar-label-row {
       display: flex;
       justify-content: space-between;
+      color: var(--text-muted);
     }
 
     .hbar-bar-bg {
@@ -402,7 +418,7 @@
       );
     }
 
-    /* Side panel: proyectos + mini sparkline */
+    /* Side panel: proyectos + mini gráficos */
     .side-panel {
       background: linear-gradient(145deg, #020617, #020617 45%, #020617);
       border-radius: 24px;
@@ -479,6 +495,7 @@
       margin-top: 2px;
     }
 
+    /* Mini sparkline (fake) */
     .sparkline {
       margin-top: 4px;
       width: 100%;
@@ -541,7 +558,7 @@
         </div>
         <div class="pill">
           <span class="pill-dot"></span>
-          <span>Dashboard Plus · Porfolio Lauris Insight</span>
+          <span>Dashboard Plus · Más visualizaciones para tu porfolio</span>
         </div>
       </div>
     </header>
@@ -554,7 +571,7 @@
           <div>
             <div class="panel-title">Visión general</div>
             <div class="panel-subtitle">
-              Proyectos, modelos y automatizaciones (datos ilustrativos)
+              Proyectos, modelos y automatizaciones en el tiempo (datos de ejemplo)
             </div>
           </div>
           <div class="chip-group">
@@ -566,7 +583,7 @@
         <!-- KPI CARDS -->
         <div class="kpi-grid">
           <div class="kpi-card">
-            <div class="kpi-label">Proyectos de Data</div>
+            <div class="kpi-label">Proyectos totales</div>
             <div class="kpi-value">18</div>
             <div class="kpi-tag">Data · BI · ML</div>
             <div class="kpi-trend">+6 vs. año anterior</div>
@@ -574,7 +591,7 @@
           </div>
 
           <div class="kpi-card">
-            <div class="kpi-label">Dashboards BI</div>
+            <div class="kpi-label">Proyectos BI</div>
             <div class="kpi-value">9</div>
             <div class="kpi-tag">Power BI · Reportes ejecutivos</div>
             <div class="kpi-trend">Uso activo por negocio</div>
@@ -598,150 +615,210 @@
           </div>
         </div>
 
-        <!-- CHART 1: Proyectos por tipo (barras) -->
-        <div class="chart-card">
-          <div class="chart-header">
-            <div class="chart-title">Proyectos por tipo</div>
-            <div class="chart-legend">
-              <div class="legend-item">
-                <span class="legend-dot legend-dot-magenta"></span>
-                <span>BI / Dashboards</span>
+        <!-- ROW: LINE + DONUT -->
+        <div class="chart-row">
+          <!-- Line chart: proyectos por mes -->
+          <div class="chart-card">
+            <div class="chart-header">
+              <div class="chart-title">Evolución de proyectos por mes</div>
+              <div class="chart-legend">
+                <div class="legend-item">
+                  <span class="legend-dot legend-dot-cyan"></span>
+                  <span>Proyectos entregados</span>
+                </div>
+                <div class="legend-item">
+                  <span class="legend-dot legend-dot-magenta"></span>
+                  <span>Proyectos en curso</span>
+                </div>
               </div>
-              <div class="legend-item">
-                <span class="legend-dot legend-dot-cyan"></span>
-                <span>ML / Automatización</span>
-              </div>
+            </div>
+            <div class="chart-line-wrapper">
+              <!-- SVG simple de ejemplo -->
+              <svg class="chart-line-svg" viewBox="0 0 320 160">
+                <!-- Fondo -->
+                <defs>
+                  <linearGradient id="areaDelivered" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="rgba(34,211,238,0.45)"/>
+                    <stop offset="100%" stop-color="rgba(15,23,42,0.1)"/>
+                  </linearGradient>
+                  <linearGradient id="areaInProgress" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="rgba(236,72,153,0.4)"/>
+                    <stop offset="100%" stop-color="rgba(15,23,42,0.05)"/>
+                  </linearGradient>
+                </defs>
+
+                <!-- Ejes ligeros -->
+                <g stroke="rgba(148,163,184,0.25)" stroke-width="1">
+                  <line x1="24" y1="140" x2="310" y2="140" />
+                  <line x1="24" y1="105" x2="310" y2="105" />
+                  <line x1="24" y1="70" x2="310" y2="70" />
+                  <line x1="24" y1="35" x2="310" y2="35" />
+                </g>
+
+                <!-- Área proyectos entregados -->
+                <path d="M24 120 L64 110 L104 95 L144 80 L184 78 L224 70 L264 60 L304 55 L304 140 L24 140 Z"
+                      fill="url(#areaDelivered)" stroke="none" />
+
+                <!-- Línea entregados -->
+                <polyline
+                  fill="none"
+                  stroke="#22d3ee"
+                  stroke-width="2.3"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  points="24,120 64,110 104,95 144,80 184,78 224,70 264,60 304,55"
+                />
+
+                <!-- Línea proyectos en curso -->
+                <polyline
+                  fill="none"
+                  stroke="#f472b6"
+                  stroke-width="2"
+                  stroke-dasharray="4 4"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  points="24,130 64,125 104,115 144,105 184,102 224,95 264,88 304,85"
+                />
+
+                <!-- Puntos -->
+                <g>
+                  <circle cx="264" cy="60" r="3.2" fill="#22d3ee" />
+                  <circle cx="304" cy="55" r="3.2" fill="#22d3ee" />
+                  <circle cx="224" cy="95" r="3" fill="#f472b6" />
+                  <circle cx="304" cy="85" r="3" fill="#f472b6" />
+                </g>
+
+                <!-- Labels meses (simplificados) -->
+                <g fill="rgba(148,163,184,0.85)" font-size="9">
+                  <text x="24" y="152">Ene</text>
+                  <text x="64" y="152">Feb</text>
+                  <text x="104" y="152">Mar</text>
+                  <text x="144" y="152">Abr</text>
+                  <text x="184" y="152">May</text>
+                  <text x="224" y="152">Jun</text>
+                  <text x="264" y="152">Jul</text>
+                  <text x="304" y="152">Ago</text>
+                </g>
+              </svg>
+              <div class="chart-line-caption">
+                Curva ilustrativa          
+    </div>
             </div>
           </div>
 
-          <div class="chart-body">
-            <div class="chart-bar-group">
-              <div class="chart-bars">
-                <div class="bar">
-                  <div class="bar-inner-magenta" style="height: 78%;"></div>
+          <!-- Donut chart: distribución por tipo de proyecto -->
+          <div class="chart-card">
+            <div class="chart-header">
+              <div class="chart-title">Distribución por tipo de proyecto</div>
+              <div class="chart-legend">
+                <div class="legend-item">
+                  <span class="legend-dot legend-dot-cyan"></span>
+                  <span>BI</span>
                 </div>
-                <div class="bar">
-                  <div class="bar-inner-cyan" style="height: 55%;"></div>
+                <div class="legend-item">
+                  <span class="legend-dot legend-dot-magenta"></span>
+                  <span>ML</span>
                 </div>
-              </div>
-              <div class="chart-xlabels">
-                <span>Pagos</span>
-                <span>Integraciones</span>
+                <div class="legend-item">
+                  <span class="legend-dot legend-dot-indigo"></span>
+                  <span>Automatización</span>
+                </div>
+                <div class="legend-item">
+                  <span class="legend-dot legend-dot-amber"></span>
+                  <span>Exploratorio</span>
+                </div>
               </div>
             </div>
-            <div class="chart-bar-group">
-              <div class="chart-bars">
-                <div class="bar">
-                  <div class="bar-inner-magenta" style="height: 60%;"></div>
+
+            <div class="donut-wrapper">
+              <!-- Donut con SVG -->
+              <svg class="donut-svg" viewBox="0 0 120 120">
+                <circle cx="60" cy="60" r="38"
+                  fill="transparent"
+                  stroke="#020617"
+                  stroke-width="15" />
+                <!-- BI 40% -->
+                <circle cx="60" cy="60" r="38"
+                  fill="transparent"
+                  stroke="#22d3ee"
+                  stroke-width="15"
+                  stroke-dasharray="95 239"
+                  stroke-dashoffset="0"
+                  stroke-linecap="round" />
+                <!-- ML 25% -->
+                <circle cx="60" cy="60" r="38"
+                  fill="transparent"
+                  stroke="#ec4899"
+                  stroke-width="15"
+                  stroke-dasharray="60 274"
+                  stroke-dashoffset="-95"
+                  stroke-linecap="round" />
+                <!-- Automatización 20% -->
+                <circle cx="60" cy="60" r="38"
+                  fill="transparent"
+                  stroke="#6366f1"
+                  stroke-width="15"
+                  stroke-dasharray="48 286"
+                  stroke-dashoffset="-155"
+                  stroke-linecap="round" />
+                <!-- Exploratorio 15% -->
+                <circle cx="60" cy="60" r="38"
+                  fill="transparent"
+                  stroke="#fbbf24"
+                  stroke-width="15"
+                  stroke-dasharray="36 298"
+                  stroke-dashoffset="-203"
+                  stroke-linecap="round" />
+
+                <circle cx="60" cy="60" r="26" fill="#020617" />
+                <text x="60" y="56" text-anchor="middle" class="donut-center">18</text>
+                <text x="60" y="69" text-anchor="middle" class="donut-center">proyectos</text>
+              </svg>
+
+              <div class="donut-details">
+                <div class="donut-details-row">
+                  <div class="donut-label">
+                    <span class="donut-dot" style="background:#22d3ee;"></span>
+                    <span>BI</span>
+                  </div>
+                  <span class="donut-value">40% · 7</span>
                 </div>
-                <div class="bar">
-                  <div class="bar-inner-cyan" style="height: 40%;"></div>
+                <div class="donut-details-row">
+                  <div class="donut-label">
+                    <span class="donut-dot" style="background:#ec4899;"></span>
+                    <span>ML</span>
+                  </div>
+                  <span class="donut-value">25% · 4</span>
                 </div>
-              </div>
-              <div class="chart-xlabels">
-                <span>Onboarding</span>
-                <span>Riesgo</span>
+                <div class="donut-details-row">
+                  <div class="donut-label">
+                    <span class="donut-dot" style="background:#6366f1;"></span>
+                    <span>Automatización</span>
+                  </div>
+                  <span class="donut-value">20% · 4</span>
+                </div>
+                <div class="donut-details-row">
+                  <div class="donut-label">
+                    <span class="donut-dot" style="background:#fbbf24;"></span>
+                    <span>Exploratorio</span>
+                  </div>
+                  <span class="donut-value">15% · 3</span>
+                </div>
+                <div style="margin-top:6px;">
+                  <span style="font-size:10px; color:var(--text-muted);">
+                    Valores de ejemplo para ilustrar mix de proyectos.
+                  </span>
+                </div>
               </div>
             </div>
-            <div class="chart-bar-group">
-              <div class="chart-bars">
-                <div class="bar">
-                  <div class="bar-inner-magenta" style="height: 42%;"></div>
-                </div>
-                <div class="bar">
-                  <div class="bar-inner-cyan" style="height: 72%;"></div>
-                </div>
-              </div>
-              <div class="chart-xlabels">
-                <span>Clientes</span>
-                <span>Operación</span>
-              </div>
-            </div>
-          </div>
-          <div class="chart-summary">
-            Gráfico ilustrativo: después podés ajustar los valores según tus proyectos reales.
           </div>
         </div>
 
-        <!-- CHART 2: Donut simple (distribución mix de proyectos) -->
-        <div class="chart-card">
+        <!-- Horizontal bar chart -->
+        <div class="chart-card" style="margin-top:10px;">
           <div class="chart-header">
-            <div class="chart-title">Mix de proyectos por tipo</div>
-            <div class="chart-legend">
-              <div class="legend-item">
-                <span class="legend-dot legend-dot-cyan"></span>
-                <span>BI</span>
-              </div>
-              <div class="legend-item">
-                <span class="legend-dot legend-dot-magenta"></span>
-                <span>ML</span>
-              </div>
-              <div class="legend-item">
-                <span class="legend-dot legend-dot-indigo"></span>
-                <span>Automatización</span>
-              </div>
-              <div class="legend-item">
-                <span class="legend-dot legend-dot-amber"></span>
-                <span>Exploratorio</span>
-              </div>
-            </div>
+            <div class="chart-title">Carga por tipo de proyecto (horas estimadas)</div>
           </div>
-
-          <div class="chart-body" style="align-items:center;">
-            <div
-              style="
-                width:120px;
-                height:120px;
-                border-radius:50%;
-                border:10px solid #22d3ee;
-                border-top-color:#ec4899;
-                border-right-color:#6366f1;
-                border-bottom-color:#fbbf24;
-                box-shadow:0 0 25px rgba(34,211,238,0.4);
-                flex-shrink:0;
-              "
-            ></div>
-
-            <div
-              style="
-                flex:1;
-                font-size:11px;
-                color:#9ca3af;
-                display:flex;
-                flex-direction:column;
-                gap:4px;
-                margin-left:12px;
-              "
-            >
-              <div style="display:flex; justify-content:space-between;">
-                <span>BI / Dashboards</span>
-                <span style="color:#e5e7eb; font-weight:500;">40% · 7</span>
-              </div>
-              <div style="display:flex; justify-content:space-between;">
-                <span>ML</span>
-                <span style="color:#e5e7eb; font-weight:500;">25% · 4</span>
-              </div>
-              <div style="display:flex; justify-content:space-between;">
-                <span>Automatización</span>
-                <span style="color:#e5e7eb; font-weight:500;">20% · 4</span>
-              </div>
-              <div style="display:flex; justify-content:space-between;">
-                <span>Exploratorios</span>
-                <span style="color:#e5e7eb; font-weight:500;">15% · 3</span>
-              </div>
-              <div style="margin-top:6px; font-size:10px;">
-                Valores de ejemplo · después podés usar datos reales de tus proyectos.
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- CHART 3: Esfuerzo estimado (barras horizontales) -->
-        <div class="chart-card">
-          <div class="chart-header">
-            <div class="chart-title">Esfuerzo estimado por tipo de proyecto (horas)</div>
-          </div>
-
           <div class="hbar-list">
             <div class="hbar-row">
               <div class="hbar-label-row">
@@ -749,7 +826,7 @@
                 <span>120 h</span>
               </div>
               <div class="hbar-bar-bg">
-                <div class="hbar-bar-fill" style="width:90%;"></div>
+                <div class="hbar-bar-fill" style="width: 90%;"></div>
               </div>
             </div>
             <div class="hbar-row">
@@ -758,7 +835,7 @@
                 <span>95 h</span>
               </div>
               <div class="hbar-bar-bg">
-                <div class="hbar-bar-fill" style="width:70%;"></div>
+                <div class="hbar-bar-fill" style="width: 70%;"></div>
               </div>
             </div>
             <div class="hbar-row">
@@ -767,7 +844,7 @@
                 <span>80 h</span>
               </div>
               <div class="hbar-bar-bg">
-                <div class="hbar-bar-fill" style="width:60%;"></div>
+                <div class="hbar-bar-fill" style="width: 60%;"></div>
               </div>
             </div>
             <div class="hbar-row">
@@ -776,13 +853,12 @@
                 <span>55 h</span>
               </div>
               <div class="hbar-bar-bg">
-                <div class="hbar-bar-fill" style="width:45%;"></div>
+                <div class="hbar-bar-fill" style="width: 45%;"></div>
               </div>
             </div>
           </div>
-
-          <div class="chart-summary">
-            Números ficticios para ilustrar carga de trabajo. Podés reemplazarlos por horas reales.
+          <div class="chart-line-caption">
+            Otra vez: números ficticios.
           </div>
         </div>
       </section>
@@ -792,7 +868,7 @@
         <div class="side-header">
           <div class="side-title">Proyectos destacados</div>
           <div class="side-subtitle">
-            Casos que podés incluir en tu porfolio (texto editable)
+            Todos las visualizaciones son ejemplos con datos ficticios
           </div>
         </div>
 
@@ -805,8 +881,9 @@
               <span class="project-badge">Data Science</span>
             </div>
             <div class="project-desc">
-              Exploración, variables clave para el precio y detección de
-              oportunidades de inversión. Incluye mapas y análisis de outliers.
+              Exploración, features relevantes para el precio y detección de
+              oportunidades de inversión. Incluye mapas geográficos y análisis
+              de outliers.
             </div>
             <div class="project-meta">
               Python · pandas · visualización · mapas
@@ -830,10 +907,11 @@
             </div>
             <div class="project-desc">
               Clasificación de clientes según probabilidad de baja, métricas
-              de desempeño y explicación del modelo para negocio.
+              (accuracy, precision, recall) y explicación del modelo orientada
+              a usuarios de negocio.
             </div>
             <div class="project-meta">
-              Clasificación · métricas · matriz de confusión
+              Árboles · regresión logística · matriz de confusión
             </div>
             <div class="sparkline">
               <div class="sparkline-line"></div>
@@ -848,13 +926,13 @@
           <article class="project-card">
             <div class="project-title-row">
               <div class="project-title">
-                CoelsaHub · Panel de integraciones & homologaciones
+                Gestion-Hub · Panel de Gestion de tareas
               </div>
               <span class="project-badge">BI & Automatización</span>
             </div>
             <div class="project-desc">
-              Dashboard para monitorear integraciones activas, estado de
-              homologaciones y tasas de uso de servicios.
+              Dashboard para monitorear gestiones activas, estado de
+              kpi´s  y tasa de uso de servicios , etc.
             </div>
             <div class="project-meta">
               Power BI · Node.js · ecosistema de pagos
@@ -871,7 +949,8 @@
         </div>
 
         <div class="footer-note">
-          🔧 Todo es demo visual. Después podés cambiar textos, números y nombres para que reflejen tus proyectos reales.
+          🔧 Todas las cifras son de ejemplo. El objetivo es mostrar el tipo de
+          visualizaciones que puedo construir.
         </div>
       </aside>
     </main>
